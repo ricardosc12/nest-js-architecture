@@ -1,0 +1,16 @@
+version: '3.9'
+
+# Importar dados
+# mongoimport --uri=mongodb://root:toor@127.0.0.1:27017 --authenticationDatabase=admin --db=steam --collection=games --type=csv --headerline --file=game_database.csv
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: toor
+    network_mode: host
+    ports:
+      - "27017:27017"
