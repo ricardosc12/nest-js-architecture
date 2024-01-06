@@ -18,6 +18,7 @@ export class CatsService {
     async create(@Body() createCat: createCatDto) {
         const cat = await this.catsModel.create(createCat);
         await cat.save()
+        return cat
     }
 
 }   
