@@ -1,45 +1,49 @@
-import { Body, Controller, Get, Inject, Injectable, Param, Patch, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Res } from "@nestjs/common";
 import { createUserDto } from "./dto/create-user.dto";
-import { Model } from "mongoose";
-import { Users } from "./users.interface";
+import { User } from "./users.interface";
 import { Response } from "express";
+import { UsersService } from "./users.service";
 
-@Injectable()
 @Controller('users')
 export class UsersController {
 
     constructor(
-        @Inject('USERS_MODEL')
-        private usersModel: Model<Users>
+        private usersService: UsersService
     ) { }
 
     @Get()
     findAll() {
-        return this.usersModel.find()
+        return this.usersService.findAll()
     }
 
     @Get(":id")
     findOnById(@Param('id') id: any) {
-        return this.usersModel.findById(id)
+        return this.usersService.findById(id)
     }
 
     @Post()
     async create(@Body() createUser: createUserDto) {
-        const user = await this.usersModel.create(createUser);
-        await user.save()
+        const user = await this.usersService.create(createUser as User);
+        return user
     }
 
     @Patch(':id')
     async update(@Param('id') id: any, @Body() updateUser: createUserDto, @Res() resp: Response) {
-        try {
-            await this.usersModel.updateOne({
-                _id: id
-            }, updateUser)
-            resp.status(200).send()
+
+        const user = await this.usersService.update(id, updateUser as User)
+
+        if (user) {
+            resp.status(200).send(user)
         }
-        catch (e) {
-            resp.status(400).send()
-        }
+
+        resp.status(400).send()
     }
 
+    @Delete(':id')
+    async delete(@Param('id') id: any, @Res() resp: Response) {
+        if (this.usersService.delete(id)) {
+            resp.status(200).send()
+        }
+        resp.status(404).send()
+    }
 }   
