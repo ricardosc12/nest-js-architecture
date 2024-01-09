@@ -25,16 +25,40 @@ class SimulationNest extends Simulation {
   ).protocols(httpProtocol3000)
 }
 
-// class SimulationNode extends Simulation {
+class SimulationJwtPerformance extends Simulation {
 
-//   val httpProtocol8081 = http
-//     .baseUrl("http://localhost:8081") // URL base para o teste na porta 8081
+  val httpProtocol3000 = http
+    .baseUrl("http://localhost:9999") // URL base para o teste na porta 8080
 
-//   val scn8081 = scenario("Test on Port 8081")
-//     .exec(http("node")
-//     .get("/")) // Caminho do endpoint para o teste na porta 8081
+  val withJwt = scenario("Test Nest JS with JWT")
+    .exec(
+      http("nest")
+      .get("/auth/profile")
+      .header("Cache-Control", "no-cache, no-store, must-revalidate")
+      .header("Pragma", "no-cache")
+      .header("Expires", "0")
+      .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWRiZWZmZWFmMjAyODNjOGE1YzU0ZiIsInVzZXJuYW1lIjoicmljayIsImlhdCI6MTcwNDg0MDg0OSwiZXhwIjoxNzA3NDMyODQ5fQ.WwCqh4oVYzFFLz-FqiRGxnHKrpD96lhvrTirAOSbdm4")
+      .check(status.is(200))
+    );
 
-//   setUp(
-//     scn8081.inject(atOnceUsers(10000)) // Número de usuários simulados para o teste na porta 8081
-//   ).protocols(httpProtocol8081)
-// }
+  val withoutJwt = scenario("Test Nest JS without JWT")
+    .exec(
+      http("nest")
+      .get("/auth/profile_unsecured")
+      .header("Cache-Control", "no-cache, no-store, must-revalidate")
+      .header("Pragma", "no-cache")
+      .header("Expires", "0")
+      .check(status.is(200))
+    );
+
+  setUp(
+    // withJwt.inject(
+    //   constantUsersPerSec(5).during(15.seconds).randomized,
+    //   constantUsersPerSec(500).during(2.minutes),
+    // ),
+    withoutJwt.inject(
+      constantUsersPerSec(5).during(15.seconds).randomized,
+      constantUsersPerSec(500).during(2.minutes),
+    )
+  ).protocols(httpProtocol3000)
+}

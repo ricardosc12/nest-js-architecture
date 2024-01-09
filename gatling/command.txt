@@ -1,2 +1,2 @@
 docker exec -it gatling gatling.sh -s simulations.SimulationNest
-docker exec -it gatling gatling.sh -s simulations.SimulationNode
+docker exec -it gatling gatling.sh -s simulations.SimulationJwtPerformance

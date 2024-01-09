@@ -1,0 +1,10 @@
+{
+  "simulation": "simulations.SimulationJwtPerformance",
+  "simulationId": "simulationjwtperformance",
+  "start": 1704843034943,
+  "description": "",
+  "scenarios": ["Test Nest JS with JWT"],
+  "assertions": [
+
+  ]
+}

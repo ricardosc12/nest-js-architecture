@@ -22,4 +22,12 @@ export class AuthController {
         return req.user
     }
 
+    @Get('profile_unsecured')
+    profile_unsecured() {
+        return {
+            id: "unsecured",
+            username: "unsecured"
+        }
+    }
+
 }
