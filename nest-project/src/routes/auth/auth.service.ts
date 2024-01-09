@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { UsersService } from '../users/users.service';
 import { User } from '../users/users.interface';
 import { JwtService } from '@nestjs/jwt';
+import { JwtUserPayload } from './interface/auth-jwt.interface';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
             throw new UnauthorizedException({ message: "Acesso não autorizado! Senha inválida!" });
         }
 
-        const payload = {
+        const payload: JwtUserPayload = {
             id: user.id,
             username: user.username
         }
