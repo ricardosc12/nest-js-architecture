@@ -9,7 +9,7 @@ class SimulationNest extends Simulation {
   val httpProtocol3000 = http
     .baseUrl("http://localhost:9999") // URL base para o teste na porta 8080
 
-  val scn8080 = scenario("Test Nest JS - NGINX")
+  val scn8080 = scenario("Test Nest JS - NGINX + GZIP")
     .exec(http("nest")
     .get("/dogs")) // Caminho do endpoint para o teste na porta 8080
 
