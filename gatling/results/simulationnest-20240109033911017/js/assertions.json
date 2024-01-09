@@ -1,0 +1,10 @@
+{
+  "simulation": "simulations.SimulationNest",
+  "simulationId": "simulationnest",
+  "start": 1704771551017,
+  "description": "",
+  "scenarios": ["Test Nest JS - NGINX"],
+  "assertions": [
+
+  ]
+}

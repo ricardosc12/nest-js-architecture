@@ -4,6 +4,7 @@ version: '3.9'
 # mongoimport --uri=mongodb://root:toor@127.0.0.1:27017 --authenticationDatabase=admin --db=steam --collection=games --type=csv --headerline --file=game_database.csv
 
 services:
+
   mongo:
     image: mongo
     container_name: mongo
@@ -14,3 +15,13 @@ services:
     network_mode: host
     ports:
       - "27017:27017"
+  
+  gatling:
+    image: denvazh/gatling:latest
+    container_name: gatling
+    network_mode: host
+    volumes:
+      - ./gatling/user-files:/opt/gatling/user-files
+      - ./gatling/results:/opt/gatling/results
+    entrypoint: /bin/bash
+    command: [ "-c", "tail -f /dev/null" ]
