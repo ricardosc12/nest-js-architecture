@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Res } from "@nestjs/common";
 import { createUserDto } from "./dto/create-user.dto";
-import { User } from "./users.interface";
 import { Response } from "express";
 import { UsersService } from "./users.service";
+import { User } from "./schema/users.schema";
 
 @Controller('users')
 export class UsersController {

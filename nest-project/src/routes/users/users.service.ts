@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User } from './users.interface';
+import { User } from './schema/users.schema';
 
 @Injectable()
 export class UsersService {

@@ -5,3 +5,10 @@ export const UserSchema = new mongoose.Schema({
     email: String,
     password: String
 });
+
+export interface User extends Document {
+    readonly id: any,
+    readonly username: string,
+    readonly email: string,
+    readonly password: string
+}
