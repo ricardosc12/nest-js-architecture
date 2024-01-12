@@ -13,21 +13,6 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
-    async validateUser(username: string, pass: string): Promise<any> {
-
-        const user = await this.usersService.findByUsername(username) as User;
-
-        if (!user) {
-            throw new NotFoundException({ messsage: "Usuário não encontrado!" })
-        }
-
-        if (user?.password !== pass) {
-            throw new UnauthorizedException({ message: "Acesso não autorizado! Senha inválida!" });
-        }
-
-        return user
-    }
-
     async login(userArg: LoginArgDto): Promise<any> {
 
         const user = await this.usersService.findByUsername(userArg.username) as User;
