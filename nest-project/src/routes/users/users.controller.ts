@@ -1,23 +1,32 @@
-import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Request, Res, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { createUserDto } from "./dto/create-user.dto";
 import { Response } from "express";
 import { UsersService } from "./users.service";
 import { User } from "./schema/users.schema";
+import { Action, CaslAbilityFactory } from "src/casl/casl-ability.factory";
+import { JwtAuthGuard } from "../common/auth/jwt-auth.guard";
+
 
 @Controller('users')
 export class UsersController {
 
     constructor(
-        private usersService: UsersService
+        private usersService: UsersService,
+        private caslAbility: CaslAbilityFactory
     ) { }
 
     @Get()
-    findAll() {
+    findAll(@Request() req) {
         return this.usersService.findAll()
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":id")
-    findOnById(@Param('id') id: any) {
+    findOnById(@Param('id') id: any, @Request() req) {
+        const ability = this.caslAbility.createForUser(req.user)
+        if (!ability.can(Action.Read, User)) {
+            throw new UnauthorizedException({ message: "Usuário não autorizado!" })
+        }
         return this.usersService.findById(id)
     }
 
