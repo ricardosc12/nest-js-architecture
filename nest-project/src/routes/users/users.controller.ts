@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Injectable, Param, Patch, Post, Res, UseGuards } from "@nestjs/common";
 import { createUserDto } from "./dto/create-user.dto";
 import { User } from "./users.interface";
 import { Response } from "express";
 import { UsersService } from "./users.service";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Controller('users')
 export class UsersController {
@@ -16,6 +17,7 @@ export class UsersController {
         return this.usersService.findAll()
     }
 
+    @UseGuards(AuthGuard)
     @Get(":id")
     findOnById(@Param('id') id: any) {
         return this.usersService.findById(id)
