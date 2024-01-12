@@ -4,6 +4,7 @@ import { DatabaseModule } from 'src/database/mongo/database.module';
 import { Connection } from 'mongoose';
 import { UserSchema } from './schema/users.schema';
 import { UsersService } from './users.service';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 
 @Module({
     imports: [DatabaseModule],
@@ -12,9 +13,10 @@ import { UsersService } from './users.service';
         {
             provide: 'users_model',
             useFactory: (connection: Connection) => connection.model('users', UserSchema),
-            inject: ['DATABASE_CONNECTION'],
+            inject: ['mongo_db_connection'],
         },
         UsersService,
+        CaslAbilityFactory
     ],
     exports: [UsersService]
 })

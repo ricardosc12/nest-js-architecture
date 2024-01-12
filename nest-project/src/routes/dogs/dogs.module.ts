@@ -17,7 +17,7 @@ import { DogsSchema } from './schema/dogs.schema';
         {
             provide: 'dogs_model',
             useFactory: (connection: Connection) => connection.model('dogs', DogsSchema),
-            inject: ['DATABASE_CONNECTION'],
+            inject: ['mongo_db_connection'],
         },
         DogsService,
         DogsResolver

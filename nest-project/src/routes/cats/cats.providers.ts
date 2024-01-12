@@ -6,7 +6,7 @@ export const catsProvider = [
     {
         provide: 'CATS_MODEL',
         useFactory: (connection: Connection) => connection.model('cats', CatsScheme),
-        inject: ['DATABASE_CONNECTION'],
+        inject: ['mongo_db_connection'],
     },
     CatsService
 ];
