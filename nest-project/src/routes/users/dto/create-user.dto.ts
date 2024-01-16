@@ -6,11 +6,11 @@ export class createUserDto {
     @IsOptional()
     email: string;
 
-    @IsString({ message: "A senha deve ser uma cadeia de caracteres" })
+    @IsString({ message: "A password deve ser um string" })
     // @MinLength(8, { message: "Senha deve ser maior do que 8 caracteres" })
     // @MaxLength(40, { message: "Senha deve ser menor do que 40 caracteres" })
     password: string;
 
-    @IsString({message: "Username deve ser uma string"})
+    @IsString({ message: "O username deve ser uma string" })
     username: string;
 }

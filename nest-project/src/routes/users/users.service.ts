@@ -1,11 +1,12 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User } from './schema/users.schema';
+import { User, UserSchema } from './schema/users.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @Inject('users_model')
+        @InjectModel(User.name)
         private userModel: Model<User>
     ) { }
 

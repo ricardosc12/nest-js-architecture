@@ -20,8 +20,8 @@ export class UsersController {
         return this.usersService.findAll()
     }
 
-    @UseGuards(JwtAuthGuard)
     @Get(":id")
+    @UseGuards(JwtAuthGuard)
     findOnById(@Param('id') id: any, @Request() req) {
         const ability = this.caslAbility.createForUser(req.user)
         if (!ability.can(Action.Read, User)) {

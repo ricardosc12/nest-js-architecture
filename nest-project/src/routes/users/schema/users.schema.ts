@@ -1,16 +1,12 @@
-import { Prop, Schema } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-export const UserSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    password: String
-});
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
     id: any;
-    
+
     @Prop()
     username: string;
 
@@ -20,6 +16,8 @@ export class User {
     @Prop()
     password: string;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User)
 
 // UserSchema.pre('save', async function (next) {
 //     this //user
