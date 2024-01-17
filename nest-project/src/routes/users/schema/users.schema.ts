@@ -28,9 +28,3 @@ export const UserSchema = SchemaFactory.createForClass(User)
 //         next();
 //     }
 // })
-// export interface User {
-//     readonly id: any,
-//     readonly username: string,
-//     readonly email: string,
-//     readonly password: string
-// }

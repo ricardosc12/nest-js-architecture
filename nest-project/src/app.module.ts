@@ -5,7 +5,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { CatsModule } from './routes/cats/cats.module';
 import { DogsModule } from './routes/dogs/dogs.module';
 import { AuthModule } from './routes/auth/auth.module';
-import { CaslModule } from './casl/casl.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
@@ -18,8 +17,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 			autoSchemaFile: true,
 		}),
 		MongooseModule.forRoot('mongodb://root:toor@127.0.0.1:27017'),
-		AuthModule,
-		CaslModule,
+		AuthModule
 	],
 	controllers: [],
 })

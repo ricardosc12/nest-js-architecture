@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
-import { DatabaseModule } from 'src/database/mongo/database.module';
-import { Connection } from 'mongoose';
 import { User, UserSchema } from './schema/users.schema';
 import { UsersService } from './users.service';
-import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AbilityUserService } from './ability/user.ability';
 
 @Module({
     imports: [
@@ -14,7 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     controllers: [UsersController],
     providers: [
         UsersService,
-        CaslAbilityFactory
+        AbilityUserService
     ],
     exports: [UsersService]
 })

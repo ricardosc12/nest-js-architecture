@@ -1,6 +1,6 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User, UserSchema } from './schema/users.schema';
+import { User } from './schema/users.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -10,22 +10,22 @@ export class UsersService {
         private userModel: Model<User>
     ) { }
 
-    findAll() {
-        return this.userModel.find()
+    findAll(fields?: any) {
+        return this.userModel.find().select(fields)
     }
 
-    async findById(id: any) {
-        const user = await this.userModel.findById(id)
+    async findById(id: any, fields?: any) {
+        const user = await this.userModel.findById(id).select(fields)
         if (!user) {
             throw new NotFoundException({ message: "Usuário não encontrado!" })
         }
         return user
     }
 
-    async findByUsername(usernameArg: string) {
+    async findByUsername(usernameArg: string, fields?: any) {
         const user = await this.userModel.findOne({
             username: usernameArg
-        })
+        }).select(fields)
         if (!user) {
             throw new NotFoundException({ message: "Usuário não encontrado!" })
         }
