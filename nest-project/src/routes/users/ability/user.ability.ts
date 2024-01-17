@@ -26,7 +26,8 @@ export class AbilityUserService {
             if (user.username == 'rick') {
                 can(Action.Create, User, {})
             }
-
+            // can(Action.Manage, User, { username: 'admin' });
+            // can(Action.Read, User, ['username']);
         })
 
 
