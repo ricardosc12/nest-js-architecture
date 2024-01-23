@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat App</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io('http://localhost:3000');
+
+        socket.emit('joinRoom', { room: 'room1' });
+
+        socket.on('newMessage', (data) => {
+            if (data.userId === socket.id) {
+                console.log(`Você enviou ${data.message}`)
+            }
+            else {
+                console.log(`Usuário ${data.userId} enviou ${data.message}`);
+            }
+        });
+
+        socket.on('userJoined', (data) => {
+            if (data.userId === socket.id) {
+                console.log("Você entrou no chat!")
+            } 
+            else {
+                console.log(`Usuário ${data.userId} entrou!`);
+            }
+        });
+
+        socket.on('userLeft', (data) => {
+            console.log(`Usuário ${data.userId} saiu!`);
+        });
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            socket.emit('sendMessage', { room: 'room1', message: message, userId: socket.id });
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Enviar Mensagem</button>
+</body>
+
+</html>

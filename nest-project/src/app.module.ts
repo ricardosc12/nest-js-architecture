@@ -6,6 +6,7 @@ import { CatsModule } from './routes/cats/cats.module';
 import { DogsModule } from './routes/dogs/dogs.module';
 import { AuthModule } from './routes/auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
 	imports: [
@@ -17,7 +18,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 			autoSchemaFile: true,
 		}),
 		MongooseModule.forRoot('mongodb://root:toor@127.0.0.1:27017'),
-		AuthModule
+		AuthModule,
+		ChatModule
 	],
 	controllers: [],
 })
